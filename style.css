@@ -1,0 +1,11 @@
+h1{
+  margin: 10px;
+}
+
+.cart-item.ng-enter{
+    -webkit-animation : fadeIn 1s;
+}
+
+.cart-item.ng-leave{
+    -webkit-animation : fadeOut 1s;
+}
