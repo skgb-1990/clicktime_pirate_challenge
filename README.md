@@ -35,3 +35,5 @@ gulp build
 ```
 http://localhost:9999
 ```
+10. Link to the demo app hosted on heroku
+[App Link](https://tranquil-forest-44348.herokuapp.com/)
