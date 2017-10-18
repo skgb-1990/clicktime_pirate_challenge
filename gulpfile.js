@@ -54,7 +54,7 @@ gulp.task('copy-html-files', function () {
 gulp.task('connect', function () {
   connect.server({
     root: 'app/',
-    port: 8888
+    port: process.env.PORT || 8888
   });
 });
 
@@ -62,7 +62,7 @@ gulp.task('connect', function () {
 gulp.task('connectDist', function () {
   connect.server({
     root: 'dist/',
-    port: 9999
+    port: process.env.PORT || 9999
   });
 });
 
