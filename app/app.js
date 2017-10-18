@@ -48,6 +48,7 @@ pirateApp.controller('MainController', function($scope){
   var productJson = PRODUCT;
   $scope.products = productJson;
 
+  // Dictionary to keep track of quantities
   $scope.quantity = {
     "1": 0,
     "2": 0,
@@ -57,6 +58,7 @@ pirateApp.controller('MainController', function($scope){
     "6": 0
   };
 
+  // Dictionary to keep track of wehter to display the item in the shopping cart or not.
   $scope.shouldShowCart = {
     "1": false,
     "2": false,
@@ -66,6 +68,7 @@ pirateApp.controller('MainController', function($scope){
     "6": false
   };
 
+  // Dictionary to keep track of the discounts for each item
   $scope.discount = {
     "1": 0,
     "2": 0,
@@ -77,12 +80,14 @@ pirateApp.controller('MainController', function($scope){
 
   $scope.totalAmt = 0;
   $scope.totalDiscount = 0;
+  $scope.additionalDiscount = 0;
 
 
   function manageCart(){
     var totalCost = 0;
     var dvdTotal = 0;
     var bluRayTotal = 0;
+    var cartItemCount = 0;
     var dvdDiscount = false;
     var bluRayDiscount = false;
     $scope.totalDiscount = 0;
@@ -97,8 +102,11 @@ pirateApp.controller('MainController', function($scope){
         bluRayTotal++;
       }
 
+      cartItemCount += $scope.quantity[item];
+
     }
 
+    // keeping a track of the dvds and blu ray counts to decide if they are elligible for the discount
     if(dvdTotal > 2){
       dvdDiscount = true;
     }
@@ -129,10 +137,17 @@ pirateApp.controller('MainController', function($scope){
       }
     }
 
-    $scope.totalAmt = totalCost;
+    if(cartItemCount >= 100){
+      $scope.additionalDiscount = TOTAL_DISCOUNT * totalCost;
+      $scope.totalDiscount += $scope.additionalDiscount;
+    }else{
+      $scope.additionalDiscount = 0;
+    }
+
+    $scope.totalAmt = totalCost - $scope.additionalDiscount;
   }
 
-
+  // handler to add an item to the cart
   $scope.addItemToCart = function(productID, quantity){
     if(($scope.quantity[productID] == 0)){
       $scope.quantity[productID] = 1;
@@ -144,22 +159,26 @@ pirateApp.controller('MainController', function($scope){
     manageCart();
   };
 
+  // handler to remove an element from the cart
   $scope.removeItemFromCart = function(productID){
     $scope.quantity[productID] = 0;
     $scope.shouldShowCart[productID] = false;
     manageCart();
   };
 
+  //updating cart on change of items
   $scope.updateCart = function(){
     manageCart();
   };
 
+  // remove or empty the cart completely
   $scope.resetCart = function(){
     for(var element in $scope.quantity){
       $scope.quantity[element] = 0;
       $scope.discount[element] = 0;
       $scope.shouldShowCart[element] = false;
       $scope.totalAmt = 0;
+      $scope.additionalDiscount = 0;
     }
   };
 
