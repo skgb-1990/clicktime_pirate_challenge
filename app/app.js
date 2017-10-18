@@ -177,9 +177,10 @@ pirateApp.controller('MainController', function($scope){
       $scope.quantity[element] = 0;
       $scope.discount[element] = 0;
       $scope.shouldShowCart[element] = false;
-      $scope.totalAmt = 0;
-      $scope.additionalDiscount = 0;
     }
+    $scope.totalAmt = 0;
+    $scope.additionalDiscount = 0;
+    $scope.totalDiscount = 0;
   };
 
 });
