@@ -1,6 +1,6 @@
-var pirateApp = angular.module('PirateApp', ['ngAnimate'])
+var pirateApp = angular.module('PirateApp', ['ngAnimate']);
 
-const PRODUCT = {
+PRODUCT = {
   "1": {
       "name": "StarWars Episode IV",
       "type": "DVD",
@@ -39,14 +39,12 @@ const PRODUCT = {
   }
 };
 
-const DVD = 'DVD';
-const BLURAY = 'Blu-Ray';
-const TOTAL_DISCOUNT = 0.05;
-
-pirateApp.constant('_', window._);
+DVD = 'DVD';
+BLURAY = 'Blu-Ray';
+TOTAL_DISCOUNT = 0.05;
 
 
-pirateApp.controller('MainController', function($scope, _){
+pirateApp.controller('MainController', function($scope){
   var productJson = PRODUCT;
   $scope.products = productJson;
 
@@ -91,11 +89,11 @@ pirateApp.controller('MainController', function($scope, _){
 
     for(var item in $scope.quantity){
 
-      if($scope.quantity[item] > 0 && $scope.products[item]['type'] == DVD){
+      if($scope.quantity[item] > 0 && $scope.products[item].type == DVD){
         dvdTotal++;
       }
 
-      if($scope.quantity[item] > 0 && $scope.products[item]['type'] == BLURAY){
+      if($scope.quantity[item] > 0 && $scope.products[item].type == BLURAY){
         bluRayTotal++;
       }
 
@@ -109,24 +107,24 @@ pirateApp.controller('MainController', function($scope, _){
       bluRayDiscount = true;
     }
 
-    for(var item in $scope.quantity){
-      totalCost += $scope.quantity[item] * $scope.products[item]['cost'];
-      if($scope.quantity[item] > 0 && $scope.products[item]['type'] == DVD){
+    for(var ele in $scope.quantity){
+      totalCost += $scope.quantity[ele] * $scope.products[ele].cost;
+      if($scope.quantity[ele] > 0 && $scope.products[ele].type == DVD){
         if(dvdDiscount){
-          $scope.discount[item] = $scope.quantity[item] * $scope.products[item]['cost'] * $scope.products[item]['discount'];
-          $scope.totalDiscount += $scope.discount[item];
-          totalCost -= $scope.discount[item];
+          $scope.discount[ele] = $scope.quantity[ele] * $scope.products[ele].cost * $scope.products[ele].discount;
+          $scope.totalDiscount += $scope.discount[ele];
+          totalCost -= $scope.discount[ele];
         }else{
-          $scope.discount[item] = 0;
+          $scope.discount[ele] = 0;
         }
       }
-      if($scope.quantity[item] > 0 && $scope.products[item]['type'] == BLURAY){
+      if($scope.quantity[ele] > 0 && $scope.products[ele].type == BLURAY){
         if(bluRayDiscount){
-          $scope.discount[item] = $scope.quantity[item] * $scope.products[item]['cost'] * $scope.products[item]['discount'];
-          $scope.totalDiscount += $scope.discount[item];
-          totalCost -= $scope.discount[item];
+          $scope.discount[ele] = $scope.quantity[ele] * $scope.products[ele].cost * $scope.products[ele].discount;
+          $scope.totalDiscount += $scope.discount[ele];
+          totalCost -= $scope.discount[ele];
         }else{
-          $scope.discount[item] = 0;
+          $scope.discount[ele] = 0;
         }
       }
     }
@@ -143,26 +141,26 @@ pirateApp.controller('MainController', function($scope, _){
       console.log("Item already exists");
     }
 
-    manageCart()
-  }
+    manageCart();
+  };
 
   $scope.removeItemFromCart = function(productID){
     $scope.quantity[productID] = 0;
     $scope.shouldShowCart[productID] = false;
     manageCart();
-  }
+  };
 
   $scope.updateCart = function(){
     manageCart();
-  }
+  };
 
   $scope.resetCart = function(){
-    for(element in $scope.quantity){
+    for(var element in $scope.quantity){
       $scope.quantity[element] = 0;
       $scope.discount[element] = 0;
       $scope.shouldShowCart[element] = false;
       $scope.totalAmt = 0;
     }
-  }
+  };
 
-})
+});
