@@ -7,5 +7,5 @@ h1{
 }
 
 .cart-item.ng-leave{
-    -webkit-animation : fadeOut 1s;
+    -webkit-animation : fadeOut 0.5s;
 }
